@@ -1,0 +1,351 @@
+{
+	"info": {
+		"_postman_id": "047fd40d-eaae-4ddf-b428-2359558d13e0",
+		"name": "Products-ms",
+		"description": "Microserviço criado para realizar o gerenciamento de produtos e simular um catálog.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Teste 1\",\r\n    \"description\": \"Produto criado para teste via Postman\",\r\n    \"price\": 55\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9999/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"products"
+					]
+				},
+				"description": "Requisição utilizada para a criação de um produto."
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Product Test 4\",\r\n    \"description\": \"Produto atualizado para teste via Postman\",\r\n    \"price\": 50\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9999/products/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"products",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "4"
+						}
+					]
+				},
+				"description": "Requisição utilizada para a atualização de um produto através do seu respectivo ID*.\n\n**Necessário informar o ID do produto que irá ser atualizado junto aos parâmetros da requisição.*"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9999/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"products"
+					]
+				},
+				"description": "Requisição utilizada para buscar e listar todos os produtos cadastrados na base de dados da API."
+			},
+			"response": []
+		},
+		{
+			"name": "Get by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9999/products/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"products",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				},
+				"description": "Requisição utilizada para buscar e listar um produto de acordo com seu respectivo ID*.\n\n**Necessário informar o ID do produto que irá ser listado junto aos parâmetros da requisição.*"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All filter Name",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9999/products/search?q=Teste",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"products",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Teste"
+						}
+					]
+				},
+				"description": "Requisição utilizada para buscar e listar produtos aplicando aplicando o filtro *q**.\n\n**Utilizado para filtrar registros pelo nome ou pela descrição do produto.*"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All filter Description",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9999/products/search?q=atualizado",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"products",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "atualizado"
+						}
+					]
+				},
+				"description": "Requisição utilizada para buscar e listar produtos aplicando aplicando o filtro *q**.\n\n**Utilizado para filtrar registros pelo nome ou pela descrição do produto.*"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All filter Min Price",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9999/products/search?min_price=100",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"products",
+						"search"
+					],
+					"query": [
+						{
+							"key": "min_price",
+							"value": "100"
+						}
+					]
+				},
+				"description": "Requisição utilizada para buscar e listar produtos aplicando aplicando o filtro *min_price**.\n\n**Utilizado para filtrar registros levando em consideração um preço mínimo.*"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All filter Max Price",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9999/products/search?max_price=55",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"products",
+						"search"
+					],
+					"query": [
+						{
+							"key": "max_price",
+							"value": "55"
+						}
+					]
+				},
+				"description": "Requisição utilizada para buscar e listar produtos aplicando aplicando o filtro *max_price**.\n\n**Utilizado para filtrar registros levando em consideração um preço máximo.*"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All filters",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9999/products/search?max_price=55&min_price=50&q=criado",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"products",
+						"search"
+					],
+					"query": [
+						{
+							"key": "max_price",
+							"value": "55"
+						},
+						{
+							"key": "min_price",
+							"value": "50"
+						},
+						{
+							"key": "q",
+							"value": "criado"
+						}
+					]
+				},
+				"description": "Requisição utilizada para buscar e listar produtos aplicando aplicando o todos os filtros disponibilizados no serviço.\n\n*   *q = Filtro de nome ou descrição;*\n*   *min_price (>=) = Filtro de preço mínimo;*\n*   *max_price (<=) = Filtro de preço máximo.*"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9999/products/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"products",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Requisição utilizada para deletar o registro de um produto de acordo com seu respectivo ID*.\n\n**Necessário informar o ID do produto que irá ser deletado junto aos parâmetros da requisição.*"
+			},
+			"response": []
+		}
+	]
+}
