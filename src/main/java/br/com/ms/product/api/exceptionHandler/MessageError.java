@@ -11,10 +11,6 @@ public class MessageError {
     private Integer status;
     private String message;
 
-    public MessageError() {
-
-    }
-
     public MessageError(Integer status, String message) {
         this.status = status;
         this.message = message;

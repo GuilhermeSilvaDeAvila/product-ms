@@ -1,13 +1,9 @@
 package br.com.ms.product.domain.repository;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
-
 
 import br.com.ms.product.domain.model.Product;
 import lombok.Getter;
@@ -20,7 +16,6 @@ public class ProductQuery {
     private String minPrice;
     private String maxPrice;
 
-    //CheckOff
     public ProductQuery(String q, String minPrice, String maxPrice) {
         this.q = q;
         this.minPrice = minPrice;

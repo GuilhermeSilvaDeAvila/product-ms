@@ -1,21 +1,14 @@
 package br.com.ms.product.domain.service;
 
-import br.com.ms.product.domain.exception.BusinessException;
 import br.com.ms.product.domain.model.Product;
 import br.com.ms.product.domain.repository.ProductQuery;
 import br.com.ms.product.domain.repository.ProductRepository;
-import br.com.ms.product.domain.repository.ProductSpecification;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +40,6 @@ public class ProductService {
 
     public List<Product> get(String q, String minPrice, String maxPrice) {
         ProductQuery productQuery = new ProductQuery(q, minPrice, maxPrice);
-
         return get(productQuery);
     }
 }
