@@ -1,9 +1,12 @@
 package br.com.ms.product.domain.service;
 
+import br.com.ms.product.domain.exceptions.EntityNotFoundException;
 import br.com.ms.product.domain.model.Product;
 import br.com.ms.product.domain.repository.ProductQuery;
 import br.com.ms.product.domain.repository.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.hibernate.ObjectNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,11 @@ public class ProductService {
     }
 
     @Transactional
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
+    @Transactional
     public Optional<Product> findById(String productId) {
         return productRepository.findById(productId);
     }
@@ -34,12 +42,16 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
-    public List<Product>  get(ProductQuery productQuery) {
+    public List<Product> getFilter(String q, String minPrice, String maxPrice) {
+        ProductQuery productQuery = new ProductQuery(q, minPrice, maxPrice);
         return productRepository.findAll(productQuery.toSpec());
     }
 
-    public List<Product> get(String q, String minPrice, String maxPrice) {
-        ProductQuery productQuery = new ProductQuery(q, minPrice, maxPrice);
-        return get(productQuery);
+    public void productExist(String id) {
+        if(productRepository.findById(id).isEmpty()){
+            throw new EntityNotFoundException();
+        }else{
+            throw new EntityNotFoundException();
+        }
     }
 }

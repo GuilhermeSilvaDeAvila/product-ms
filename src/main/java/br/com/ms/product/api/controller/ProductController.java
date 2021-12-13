@@ -19,7 +19,6 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    ProductRepository productRepository;
     ProductService productService;
     ProductMapper productMapper;
 
@@ -32,7 +31,7 @@ public class ProductController {
 
     @GetMapping
     public List<ProductDTO> getAllProducts(){
-        return productMapper.toCollection(productRepository.findAll());
+        return productMapper.toCollection(productService.findAll());
     }
 
     @GetMapping("/{id}")
@@ -44,34 +43,28 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable String id){
-         if(productService.findById(id).isEmpty()){
-             return ResponseEntity.notFound().build();
-         }
-         productService.deleteProduct(id);
+        productService.productExist(id);
+        productService.deleteProduct(id);
 
-         return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> updateClient(@Valid @RequestBody ProductRequestDTO productRequestDTO, @PathVariable String id){
-        if(productService.findById(id).isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+        productService.productExist(id);
         Product product = productMapper.toEntity(productRequestDTO);
-
-        product.setId(id);
-        productService.create(product);
 
         return ResponseEntity.ok().body(productMapper.toDTO(product));
     }
 
-    @GetMapping("/search")
-    public List<ProductDTO> getProductFilter(@RequestParam(required = false) String q,
-                                             @RequestParam(required = false) String min_price,
-                                             @RequestParam(required = false) String max_price){
 
-        List<Product> products = productService.get(
-                q, min_price, max_price);
+    @GetMapping("/search")
+    public List<ProductDTO> getProductFilter(@RequestParam(required = false, name = "q") String q,
+                                             @RequestParam(required = false, name = "min_price") String minPrice,
+                                             @RequestParam(required = false, name = "max_price") String maxPrice){
+
+        List<Product> products = productService.getFilter(
+                q, minPrice, maxPrice);
 
         return productMapper.toCollection(products);
     }

@@ -1,5 +1,6 @@
 package br.com.ms.product.api.exceptionHandler;
 
+import br.com.ms.product.domain.exceptions.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -24,17 +27,27 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        List<MessageError> response  = new ArrayList<>();
+        MessageError response  = new MessageError();
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        List<String> message = new ArrayList<>();
 
         fieldErrors.forEach(e ->{
             Integer statusError = status.value();
-            String message = messageSource.getMessage(e, LocaleContextHolder.getLocale());
+            String error = messageSource.getMessage(e, LocaleContextHolder.getLocale());
             String field =  e.getField();
-            MessageError messageError = new MessageError(statusError, field.concat(" " + message));
-            response.add(messageError);
+
+            message.add(field.concat(" " + error));
+
+            response.setStatus(statusError);
+            response.setMessage(message);
         });
 
         return handleExceptionInternal(ex, response, headers, status, request);
+    }
+
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex, WebRequest request){
+        return handleExceptionInternal(ex, "", new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 }

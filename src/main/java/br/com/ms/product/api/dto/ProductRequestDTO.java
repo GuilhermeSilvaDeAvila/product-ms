@@ -17,6 +17,6 @@ public class ProductRequestDTO {
     @NotBlank
     private String description;
     @NotNull
-    @DecimalMin(value = "0.0")
+    @DecimalMin(value = "0.01")
     private BigDecimal price;
 }
